@@ -1,4 +1,5 @@
 @import "box-shadow.css";
+@import "btn-spin.css";
 
 /*隐藏滚动条*/
 ::-webkit-scrollbar {
@@ -11,4 +12,13 @@
 body {
     overflow: hidden;
     text-align: center;
+}
+
+.noSelect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

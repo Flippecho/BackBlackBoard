@@ -1,7 +1,7 @@
 <template>
   <div id="footer" class="fixed-bottom">
     <p id="quote">:D 正在加载...</p>
-    <p id="copyright">© 2021 &nbsp; 哔哔啵嘚</p>
+    <p id="copyright">© 2021 &nbsp; 哔哔板</p>
   </div>
 </template>
 

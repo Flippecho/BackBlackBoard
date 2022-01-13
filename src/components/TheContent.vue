@@ -103,13 +103,6 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  float: right;
-  width: 60vw;
-  right: 5vw;
-  height: 80vh;
-  top: 5vh;
-}
 
 #the-panel {
   display: flex;

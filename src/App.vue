@@ -1,8 +1,7 @@
 <template>
-  <div id="app">
-<!--    <TheMain/>-->
+  <div id="app" class="noSelect">
     <the-content/>
-    <TheSidebar/>
+<!--    <TheSidebar/>-->
     <the-footer/>
   </div>
 </template>
@@ -10,12 +9,11 @@
 <script>
 import TheContent from "@/components/TheContent";
 import TheFooter from "@/components/TheFooter";
-import TheMain from "@/components/TheMain";
 import TheSidebar from "@/components/TheSidebar";
 
 export default {
   name: 'App',
-  components: {TheSidebar, TheMain, TheContent, TheFooter}
+  components: {TheSidebar, TheContent, TheFooter}
 };
 </script>
 
