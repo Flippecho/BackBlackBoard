@@ -1,12 +1,12 @@
 <template>
-  <div id="the-content-info-flow">
-    这是信息流界面
+  <div id="personalization">
+    这是个性化页面
   </div>
 </template>
 
 <script>
 export default {
-  name: "TheContentInfoFlow"
+  name: "Personalization"
 }
 </script>
 

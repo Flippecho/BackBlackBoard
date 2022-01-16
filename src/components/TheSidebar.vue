@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import TheContentInfoFlow from "@/components/TheContentInfoFlow";
-import TheContentSafetyReport from "@/components/TheContentSafetyReport";
-import TheContentYouthStudy from "@/components/TheContentYouthStudy";
-import TheContentCurriculum from "@/components/TheContentCurriculum";
-import TheContentEmptyClassrooms from "@/components/TheContentEmptyClassrooms";
-import TheContentSetting from "@/components/TheContentSetting";
+import TheContentInfoFlow from "@/components/InfoFlow";
+import TheContentSafetyReport from "@/components/SafetyReport";
+import TheContentYouthStudy from "@/components/YouthStudy";
+import TheContentCurriculum from "@/components/Curriculum";
+import TheContentEmptyClassrooms from "@/components/EmptyClassrooms";
+import TheContentSetting from "@/components/Personalization";
 
 export default {
   name: "TheSidebar",

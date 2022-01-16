@@ -1,14 +1,6 @@
 <template>
-  <div id="the-content-safety-report">
+  <div id="safety-report">
     <div id="map"></div>
-    <div class="btn-container">
-      <button class="btn-spin"
-              :disabled="isPosValid"
-              @click="clockIn"
-              :data-content-default="this.posStatus"
-              data-content-spinning="稍等片刻">
-      </button>
-    </div>
     <div class="card align-middle box-shadow">
       <div class="card-header" @click="askForLeaveForAll" :data-bs-toggle="isAnyClickable"
            data-bs-target="#staticBackdrop">
@@ -27,6 +19,14 @@
         </div>
       </div>
       <div class="card-footer text-muted">点击头像即可上报外出情况哦！</div>
+    </div>
+    <div class="btn-container">
+      <button class="btn-spin"
+              :disabled="isPosValid"
+              @click="clockIn"
+              :data-content-default="this.posStatus"
+              data-content-spinning="稍等片刻">
+      </button>
     </div>
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -73,8 +73,8 @@
 import AMapLoader from '@amap/amap-jsapi-loader';
 
 export default {
-  name: "TheContentSafetyReport",
-  mounted() {
+  name: "SafetyReport",
+  created() {
     const _this = this;
 
     AMapLoader.load({
@@ -221,9 +221,9 @@ export default {
       this.askForLeaveString = str;
     },
     dynamicColor(person) {
-      if (this.curHour < 22) return 'text-dark'
       if (person.clockIn) return 'text-success';
       else if (person.askForLeave) return 'text-warning';
+      else if (this.curHour < 22) return 'text-dark'
       else return 'text-danger';
     },
     isClickable(person) {
@@ -243,74 +243,79 @@ export default {
 
 
 <style scoped>
+
 #map {
-  position: absolute;
-  height: 80%;
-  width: 50%;
-  top: 0;
-  left: 0;
-  border-radius: 21px;
-  background: linear-gradient(145deg, #ffffff, #e5e5e5);
-  box-shadow: 11px 11px 21px #c9c9c9,
-  -11px -11px 21px #ffffff;
+  width: 48rem;
+  height: 36rem;
+  padding: 0;
+  float: left;
+  margin: 0 calc((100vw - 11rem - 24rem - 48rem) / 2);
+  border-radius: 2.5rem;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 7px 7px 21px #d6d6d6,
+  -7px -7px 21px #ffffff;
 }
 
 .btn-container {
-  position: absolute;
-  height: 20%;
-  width: 50%;
-  bottom: 0;
-  left: 0;
+  height: calc(100vh - 3rem - 36rem);
+  width: 48rem;
+  margin: 0 calc((100vw - 11rem - 24rem - 48rem) / 2);
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+}
+
+.btn-spin {
+  font-size: 1.5rem;
+  padding: 1rem;
+  color: #3C374A;
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 7px 7px 21px #d6d6d6,
+  -7px -7px 21px #ffffff;
 }
 
 .card {
-  font-family: Helvetica, serif;
-  position: absolute;
-  height: 100%;
-  width: 30%;
-  right: 5%;
+  width: 24rem;
+  float: right;
+  margin: calc((100vh - 6rem - 38rem) / 2) 0;
 }
 
-.card > .card-header {
-  font-size: 2em;
+.card-header {
+  font-size: 2rem;
+  padding: 1rem;
 }
 
-.card > .card-body {
-  width: 100%;
-  height: calc(100% - 120px);
+.card-body {
+  margin: 2rem;
+  padding: 0;
   display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-columns: 10rem 10rem;
 }
 
-.card > .card-body > div {
-  margin: 1.5rem;
+.card-body > div {
+  width: 8rem;
+  margin: 1rem;
 }
 
-.card > .card-body > div > img {
-  width: 100px;
-  height: 100px;
+.card-body > div > img {
+  width: 6rem;
   border-radius: 50%;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow: 5px 5px 27px #cccccc,
-  -5px -5px 27px #ffffff;
+  padding: 0;
+  margin: 1rem;
 }
 
-.card > .card-body > div > p {
+.card-body > div > p {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  margin: 0;
   text-align: center;
-  height: 80px;
-  line-height: 80px;
-  font-size: 1.5rem;
-  padding: 0 20px;
-  white-space: nowrap;
-  overflow-x: auto;
 }
 
-.card > .card-body > p {
-  font-size: 1.5rem;
+.card-footer {
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin: 0;
 }
 
 </style>

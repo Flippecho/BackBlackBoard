@@ -1,0 +1,11 @@
+.slide-fade-enter-active {
+    transition: all .25s linear;
+}
+.slide-fade-leave-active {
+    transition: all .25s linear;
+}
+.slide-fade-enter, .slide-fade-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateY(6rem);
+    opacity: 0;
+}

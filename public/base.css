@@ -1,5 +1,6 @@
 @import "box-shadow.css";
 @import "btn-spin.css";
+@import "slide-fade.css";
 
 /*隐藏滚动条*/
 ::-webkit-scrollbar {
@@ -12,6 +13,8 @@
 body {
     overflow: hidden;
     text-align: center;
+    font-family: Helvetica, serif;
+    color: #3C374A;
 }
 
 .noSelect {

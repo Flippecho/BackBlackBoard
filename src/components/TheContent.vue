@@ -1,29 +1,37 @@
 <template>
   <div id="the-content">
-    <div id="the-sidebar">
-      <div id="tab-container">
-        <div v-for="tab in tabs"
-             :key="tab.id"
-             :title="tab.title"
-             @click="change(tab.name)"
-             class="tab-item">
-          <button class="particles-button"
-                  :style="tab.style">{{ tab.title }}
-          </button>
-        </div>
-      </div>
-    </div>
+    <ul class="dock">
+      <li class="icon"><img src="../assets/信息流.svg" alt=""></li>
+      <li class="icon"><img src="../assets/报寝.svg" alt=""></li>
+      <li class="icon"><img src="../assets/青年大学习.svg" alt=""></li>
+      <li class="icon"><img src="../assets/课表.svg" alt=""></li>
+      <li class="icon"><img src="../assets/空教室.svg" alt=""></li>
+      <li class="icon"><img src="../assets/个性化.svg" alt=""></li>
+    </ul>
+<!--    <div id="the-sidebar">-->
+<!--      <div id="tab-container">-->
+<!--        <div v-for="tab in tabs"-->
+<!--             :key="tab.id"-->
+<!--             :title="tab.title"-->
+<!--             @click="change(tab.name)"-->
+<!--             class="tab-item">-->
+<!--          <button class="particles-button"-->
+<!--                  :style="tab.style">{{ tab.title }}-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div id="the-panel" :is="currentTab" keep-alive></div>
   </div>
 </template>
 
 <script>
-import TheContentInfoFlow from "@/components/TheContentInfoFlow";
-import TheContentSafetyReport from "@/components/TheContentSafetyReport";
-import TheContentYouthStudy from "@/components/TheContentYouthStudy";
-import TheContentCurriculum from "@/components/TheContentCurriculum";
-import TheContentEmptyClassrooms from "@/components/TheContentEmptyClassrooms";
-import TheContentSetting from "@/components/TheContentSetting";
+import TheContentInfoFlow from "@/components/InfoFlow";
+import TheContentSafetyReport from "@/components/SafetyReport";
+import TheContentYouthStudy from "@/components/YouthStudy";
+import TheContentCurriculum from "@/components/Curriculum";
+import TheContentEmptyClassrooms from "@/components/EmptyClassrooms";
+import TheContentSetting from "@/components/Personalization";
 
 export default {
   name: "TheContent",
@@ -120,9 +128,34 @@ export default {
   align-items: center;
   float: left;
   position: relative;
-  width: 20%;
+  width: 20vw;
   top: 5vh;
   height: 80vh;
+  overflow: hidden;
+}
+
+.dock {
+  --scale: 1;
+  width: 5rem;
+  height: 70vh;
+  padding: 0;
+  margin: 10vh 2vw 20vh 3vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 2.5rem;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow:  7px 7px 21px #d6d6d6,
+  -7px -7px 21px #ffffff;
+}
+
+.icon {
+  list-style: none;
+  margin: 1rem 0;
+}
+
+.icon > img {
+  width: calc(3rem * var(--scale));
   overflow: hidden;
 }
 
