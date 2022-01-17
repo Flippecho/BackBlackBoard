@@ -9,7 +9,7 @@
     </ul>
     <transition name="slide-fade" mode="out-in" appear>
       <keep-alive>
-        <component id="panel" :is="currentTab"></component>
+        <div id="panel" :is="currentTab"></div>
       </keep-alive>
     </transition>
   </div>
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     change(tab) {
-      if(tab.name != this.currentTab) {
+      if (tab.name !== this.currentTab) {
         this.currentTab = tab.name;
         this.showAnimate[tab.id] = true;
       }
@@ -107,22 +107,26 @@ export default {
 
 <style>
 #app {
+  --gap-x: 4rem;
+  --gap-y: 3rem;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 9rem calc(100vw - 9rem);
+  overflow: hidden;
   background-image: linear-gradient(transparent 98%, #BDBDBD 98%),
   linear-gradient(to right, transparent 98%, #BDBDBD 98%);
   background-size: 2rem 2rem;
   background-repeat: repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
 }
 
 #dock {
-  width: 5rem;
-  height: 34rem;
+  --dock-height: 34rem;
+  --half-dock-y: calc((100vh - var(--dock-height)) / 2);
   padding: 0;
-  margin: calc((100vh - 34rem) / 2) 0 calc((100vh - 34rem) / 2) 3rem;
+  margin: var(--half-dock-y) 0 var(--half-dock-y) 4rem;
   float: left;
   display: flex;
   flex-direction: column;
@@ -144,10 +148,9 @@ export default {
 }
 
 #panel {
-  width: calc(100vw - 11rem);
-  height: calc(100vh - 3rem);
+  height: 100vh;
   padding: 0;
-  margin: 3rem 3rem 0 0;
+  margin: 0;
   float: right;
 }
 

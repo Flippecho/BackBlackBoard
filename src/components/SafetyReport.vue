@@ -1,67 +1,73 @@
 <template>
-  <div id="safety-report">
-    <div id="map"></div>
-    <div class="card align-middle box-shadow">
-      <div class="card-header" @click="askForLeaveForAll" :data-bs-toggle="isAnyClickable"
-           data-bs-target="#staticBackdrop">
-        {{ this.dormitoryStatus.name }}
+  <div class="safety-report">
+    <div class="left">
+      <div id="map"></div>
+      <div class="btn-container">
+        <button class="btn-spin"
+                :disabled="isPosValid"
+                @click="clockIn"
+                :data-content-default="this.posStatus"
+                data-content-spinning="稍等片刻">
+        </button>
       </div>
-      <div class="card-body">
-        <div @click="pushToAskForLeave(curUser)" :data-bs-toggle="isClickable(curUser)"
-             data-bs-target="#staticBackdrop" :key="curUser.id">
-          <img :src="require('../assets/'+ curUser.name +'.jpg')" alt="">
-          <p :class="dynamicColor(curUser)">{{ curUser.name }}</p>
+    </div>
+
+    <div class="right">
+      <div class="card align-middle box-shadow">
+        <div class="card-header" @click="askForLeaveForAll" :data-bs-toggle="isAnyClickable"
+             data-bs-target="#staticBackdrop">
+          {{ this.dormitoryStatus.name }}
         </div>
-        <div v-for="person in roommateList" @click="pushToAskForLeave(person)" :data-bs-toggle="isClickable(person)"
-             data-bs-target="#staticBackdrop" :key="person.id">
-          <img :src="require('../assets/'+ person.name +'.jpg')" alt="">
-          <p :class="dynamicColor(person)">{{ person.name }}</p>
+        <div class="card-body">
+          <div @click="pushToAskForLeave(curUser)" :data-bs-toggle="isClickable(curUser)"
+               data-bs-target="#staticBackdrop" :key="curUser.id">
+            <img :src="require('../assets/'+ curUser.name +'.jpg')" alt="">
+            <p :class="dynamicColor(curUser)">{{ curUser.name }}</p>
+          </div>
+          <div v-for="person in roommateList" @click="pushToAskForLeave(person)" :data-bs-toggle="isClickable(person)"
+               data-bs-target="#staticBackdrop" :key="person.id">
+            <img :src="require('../assets/'+ person.name +'.jpg')" alt="">
+            <p :class="dynamicColor(person)">{{ person.name }}</p>
+          </div>
         </div>
+        <div class="card-footer text-muted">点击头像即可上报外出情况哦！</div>
       </div>
-      <div class="card-footer text-muted">点击头像即可上报外出情况哦！</div>
-    </div>
-    <div class="btn-container">
-      <button class="btn-spin"
-              :disabled="isPosValid"
-              @click="clockIn"
-              :data-content-default="this.posStatus"
-              data-content-spinning="稍等片刻">
-      </button>
-    </div>
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title m-auto" id="staticBackdropLabel">外出情况上报</h5>
-          </div>
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <span class="input-group-text">请假人</span>
-              <input type="text" class="form-control" :placeholder="this.askForLeaveString" aria-label="Username"
-                     aria-describedby="basic-addon1" readonly>
+      <button class="test btn-spin" @click="flag=!flag">{{ testContext }}</button>
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title m-auto" id="staticBackdropLabel">外出情况上报</h5>
             </div>
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <span class="input-group-text">请假人</span>
+                <input type="text" class="form-control" :placeholder="this.askForLeaveString" aria-label="Username"
+                       aria-describedby="basic-addon1" readonly>
+              </div>
 
-            <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingAddress" placeholder="外出地址">
-              <label for="floatingAddress">外出地址</label>
-            </div>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingAddress" placeholder="外出地址">
+                <label for="floatingAddress">外出地址</label>
+              </div>
 
-            <div class="form-floating">
-              <input type="text" class="form-control" id="floatingReason" placeholder="外出事由">
-              <label for="floatingReason">外出事由</label>
+              <div class="form-floating">
+                <input type="text" class="form-control" id="floatingReason" placeholder="外出事由">
+                <label for="floatingReason">外出事由</label>
+              </div>
             </div>
-          </div>
-          <div class="input-group" style="margin: 1rem; width: calc(100% - 2rem)">
-            <span class="input-group-text">预计返校时间</span>
-            <input type="datetime-local" id="return-time" class="form-control"
-                   name="return-time" :value="this.curTime"
-                   :min="this.curTime">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="commitAskForLeave()">确认并提交
-            </button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消并关闭</button>
+            <div class="input-group" style="margin: 1rem; width: calc(100% - 2rem)">
+              <span class="input-group-text">预计返校时间</span>
+              <input type="datetime-local" id="return-time" class="form-control"
+                     name="return-time" :value="this.curTime"
+                     :min="this.curTime">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="commitAskForLeave()">确认并提交
+              </button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消并关闭</button>
+            </div>
           </div>
         </div>
       </div>
@@ -96,7 +102,7 @@ export default {
       // 构造点标记
       const marker = new AMap.Marker({
         title: '寝室',
-        position: [120.44, 30.52]
+        position: this.dormitoryStatus.position
       });
       // 构造矢量圆形
       const circle = new AMap.Circle({
@@ -122,6 +128,7 @@ export default {
           console.log(p1);
           console.log(p2);
           _this.distance = Math.round(p1.distance(p2));
+          _this.curUser.position = p2;
           console.log(_this.distance);
         }
       });
@@ -138,12 +145,14 @@ export default {
         name: "张岩峰",
         id: 8208200003,
         clockIn: false,
-        askForLeave: false
+        askForLeave: false,
+        position: []
       },
       dormitoryStatus: {
         name: '不醒人室',
         clockIn: false,
-        askForLeave: false
+        askForLeave: false,
+        position: [120.44, 30.52]
       },
       roommateList: [
         {
@@ -166,7 +175,8 @@ export default {
         }
       ],
       askForLeaveList: [],
-      askForLeaveString: ''
+      askForLeaveString: '',
+      flag: false
     }
   },
   computed: {
@@ -174,10 +184,12 @@ export default {
       if (this.curHour < 21) return '21:00 后才能打卡哦！'
       else if (this.curUser.clockIn) return '打卡完成!';
       else if (this.distance < 0) return '正在获取定位...';
-      else if (this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
+      // else if (this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
+      else if (this.flag === true ||  this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
       else return '似乎你不在寝室呢?';
     },
     isPosValid() {
+      if(this.curHour >= 21 && this.flag === true) return false;
       return this.curHour < 21 || !(this.distance >= 0 && this.distance <= this.reasonableOffset) || this.curUser.clockIn;
     },
     curTime() {
@@ -194,6 +206,10 @@ export default {
     },
     curHour() {
       return new Date().getHours();
+    },
+    testContext() {
+      if(this.flag) return "丢弃金手指";
+      else return "一键无视距离";
     }
   },
   methods: {
@@ -235,6 +251,9 @@ export default {
         person.clockIn = false;
         person.askForLeave = true;
       }
+    },
+    changeVal(val) {
+      this.dormitoryStatus.position = val;
     }
   }
 }
@@ -244,12 +263,19 @@ export default {
 
 <style scoped>
 
+.safety-report {
+  display: grid;
+  grid-template-columns: calc(100vw - 9rem - 28rem) 28rem;
+}
+
+.left {
+  display: grid;
+  grid-template-rows: calc(100vh - 9rem) 9rem;
+}
+
 #map {
-  width: 48rem;
-  height: 36rem;
-  padding: 0;
-  float: left;
-  margin: 0 calc((100vw - 11rem - 24rem - 48rem) / 2);
+  margin: var(--gap-y) 7rem 0 7rem;
+  height: calc(100vh - 12rem);
   border-radius: 2.5rem;
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
   box-shadow: 7px 7px 21px #d6d6d6,
@@ -257,17 +283,12 @@ export default {
 }
 
 .btn-container {
-  height: calc(100vh - 3rem - 36rem);
-  width: 48rem;
-  margin: 0 calc((100vw - 11rem - 24rem - 48rem) / 2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: var(--gap-y) var(--gap-x);
 }
 
 .btn-spin {
-  font-size: 1.5rem;
-  padding: 1rem;
+  font-size: 1.4rem;
+  padding: 0.8rem;
   color: #3C374A;
   border-radius: 1.5rem;
   background: linear-gradient(145deg, #ffffff, #e6e6e6);
@@ -276,9 +297,10 @@ export default {
 }
 
 .card {
-  width: 24rem;
-  float: right;
-  margin: calc((100vh - 6rem - 38rem) / 2) 0;
+  --card-height: 38.25rem;
+  --half-card-y: calc((100vh - var(--card-height)) / 2);
+  /*margin: var(--half-card-y) var(--gap-x) var(--half-card-y) 0;*/
+  margin: 3rem var(--gap-x) 3rem 0;
 }
 
 .card-header {
@@ -316,6 +338,35 @@ export default {
   font-size: 1rem;
   padding: 0.5rem;
   margin: 0;
+}
+
+.modal-content {
+  border-radius: 25px;
+  background: #ffffff;
+  box-shadow: inset 16px 16px 32px #e8e8e8,
+  inset -16px -16px 32px #ffffff;
+}
+
+.modal-footer {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.modal-footer > button {
+  margin: 0 1.5rem;
+  border-radius: 1.5rem;
+}
+
+.test {
+  border: 0;
+  border-radius: 7px;
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow:  35px 35px 70px #e6e6e6,
+  -35px -35px 70px #ffffff;
+  margin-right: var(--gap-x);
+  font-size: 1.2rem;
+  text-align: left;
+  padding: 0.5rem 2rem;
 }
 
 </style>
