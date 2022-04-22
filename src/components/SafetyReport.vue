@@ -185,11 +185,11 @@ export default {
       else if (this.curUser.clockIn) return '打卡完成!';
       else if (this.distance < 0) return '正在获取定位...';
       // else if (this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
-      else if (this.flag === true ||  this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
+      else if (this.flag === true || this.distance <= this.reasonableOffset) return '好耶，可以打卡喽！';
       else return '似乎你不在寝室呢?';
     },
     isPosValid() {
-      if(this.curHour >= 21 && this.flag === true) return false;
+      if (this.curHour >= 21 && this.flag === true) return false;
       return this.curHour < 21 || !(this.distance >= 0 && this.distance <= this.reasonableOffset) || this.curUser.clockIn;
     },
     curTime() {
@@ -208,7 +208,7 @@ export default {
       return new Date().getHours();
     },
     testContext() {
-      if(this.flag) return "丢弃金手指";
+      if (this.flag) return "丢弃金手指";
       else return "一键无视距离";
     }
   },
@@ -361,7 +361,7 @@ export default {
   border: 0;
   border-radius: 7px;
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
-  box-shadow:  35px 35px 70px #e6e6e6,
+  box-shadow: 35px 35px 70px #e6e6e6,
   -35px -35px 70px #ffffff;
   margin-right: var(--gap-x);
   font-size: 1.2rem;
